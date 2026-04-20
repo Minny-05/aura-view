@@ -71,12 +71,10 @@ export default function OfficialDashboard() {
                 <h3 className="font-display font-bold text-xl">Cases by village</h3>
                 <p className="text-sm text-muted-foreground">Color = risk level (Low / Med / High)</p>
               </div>
-              <div className="flex gap-2 text-xs">
-                {[["low","Low"],["med","Med"],["high","High"]].map(([k,l]) => (
-                  <span key={k} className="flex items-center gap-1.5">
-                    <span className={`w-2.5 h-2.5 rounded-full bg-risk-${k}`} />{l}
-                  </span>
-                ))}
+              <div className="flex gap-3 text-xs">
+                <span className="flex items-center gap-1.5"><span className="w-2.5 h-2.5 rounded-full bg-risk-low" />Low</span>
+                <span className="flex items-center gap-1.5"><span className="w-2.5 h-2.5 rounded-full bg-risk-med" />Med</span>
+                <span className="flex items-center gap-1.5"><span className="w-2.5 h-2.5 rounded-full bg-risk-high" />High</span>
               </div>
             </div>
             <VillageRiskChart />
