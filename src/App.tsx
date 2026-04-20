@@ -5,6 +5,11 @@ import { Toaster } from "@/components/ui/toaster";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import Index from "./pages/Index.tsx";
 import NotFound from "./pages/NotFound.tsx";
+import Login from "./pages/Login.tsx";
+import Register from "./pages/Register.tsx";
+import ReportSymptoms from "./pages/ReportSymptoms.tsx";
+import AshaDashboard from "./pages/AshaDashboard.tsx";
+import OfficialDashboard from "./pages/OfficialDashboard.tsx";
 
 const queryClient = new QueryClient();
 
@@ -16,7 +21,11 @@ const App = () => (
       <BrowserRouter>
         <Routes>
           <Route path="/" element={<Index />} />
-          {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
+          <Route path="/login" element={<Login />} />
+          <Route path="/register" element={<Register />} />
+          <Route path="/report" element={<ReportSymptoms />} />
+          <Route path="/asha" element={<AshaDashboard />} />
+          <Route path="/dashboard" element={<OfficialDashboard />} />
           <Route path="*" element={<NotFound />} />
         </Routes>
       </BrowserRouter>
