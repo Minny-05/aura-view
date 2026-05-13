@@ -167,6 +167,35 @@ export default function OfficialDashboard() {
             </table>
           </div>
         </div>
+
+        {/* Registered users mailing list */}
+        <div className="glass-card rounded-3xl p-6">
+          <div className="flex items-center justify-between mb-5 flex-wrap gap-3">
+            <div>
+              <h3 className="font-display font-bold text-xl">Registered users mailing list</h3>
+              <p className="text-sm text-muted-foreground">All accounts receive official broadcasts</p>
+            </div>
+            <Button variant="hero" onClick={broadcastAll}>
+              <Mail className="w-4 h-4" />Send to all {registeredUsers.length}
+            </Button>
+          </div>
+          <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-3">
+            {registeredUsers.map((u) => (
+              <div key={u.email} className="flex items-center gap-3 p-3 rounded-2xl bg-card/50 border border-border/60 hover:border-primary/40 transition-smooth">
+                <div className={cn("w-10 h-10 rounded-xl flex items-center justify-center font-bold text-sm shrink-0",
+                  u.role === "official" ? "bg-primary/15 text-primary" : u.role === "asha" ? "bg-success/15 text-success" : "bg-accent/40 text-accent-foreground"
+                )}>
+                  {u.name.split(" ").map((n) => n[0]).slice(0, 2).join("")}
+                </div>
+                <div className="min-w-0 flex-1">
+                  <div className="font-semibold text-sm truncate">{u.name}</div>
+                  <div className="text-xs text-muted-foreground truncate">{u.email}</div>
+                </div>
+                <span className="text-[10px] font-bold uppercase tracking-wider text-muted-foreground">{u.role}</span>
+              </div>
+            ))}
+          </div>
+        </div>
       </div>
     </PageShell>
   );
