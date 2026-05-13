@@ -46,12 +46,17 @@ export default function OfficialDashboard() {
             <h1 className="font-display text-4xl md:text-5xl font-extrabold">District risk dashboard</h1>
             <p className="text-muted-foreground mt-2">Live data from villagers, ASHA workers and Sentinel-2 satellites.</p>
           </div>
-          <div className="flex gap-2 items-center px-4 py-2 rounded-full glass-card text-sm">
-            <span className="relative flex h-2 w-2">
-              <span className="animate-ripple absolute inline-flex h-full w-full rounded-full bg-success opacity-75" />
-              <span className="relative inline-flex rounded-full h-2 w-2 bg-success" />
-            </span>
-            <span className="font-medium">Updated 2 min ago</span>
+          <div className="flex gap-3 items-center flex-wrap">
+            <div className="flex gap-2 items-center px-4 py-2 rounded-full glass-card text-sm">
+              <span className="relative flex h-2 w-2">
+                <span className="animate-ripple absolute inline-flex h-full w-full rounded-full bg-success opacity-75" />
+                <span className="relative inline-flex rounded-full h-2 w-2 bg-success" />
+              </span>
+              <span className="font-medium">Updated 2 min ago</span>
+            </div>
+            <Button variant="hero" size="lg" onClick={broadcastAll}>
+              <Mail className="w-4 h-4" />Email all ({registeredUsers.length})
+            </Button>
           </div>
         </div>
 
