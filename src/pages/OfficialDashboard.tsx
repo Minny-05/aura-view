@@ -1,10 +1,11 @@
 import { PageShell } from "@/components/PageShell";
 import { Button } from "@/components/ui/button";
-import { villageRisks, diseaseDist } from "@/lib/mockData";
+import { villageRisks, diseaseDist, registeredUsers } from "@/lib/mockData";
 import { VillageRiskChart, TrendChart, DiseaseDonut, WaterScatter } from "@/components/charts/Charts";
-import { AlertTriangle, TrendingUp, Activity, Send, MapPin } from "lucide-react";
+import { AlertTriangle, TrendingUp, Activity, Send, MapPin, Mail } from "lucide-react";
 import { toast } from "sonner";
 import { cn } from "@/lib/utils";
+
 
 const riskBadge = (r: string) =>
   r === "high" ? "bg-destructive/15 text-destructive border-destructive/30"
