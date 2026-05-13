@@ -66,3 +66,26 @@ export const reports: Report[] = [
   { id: "RPT-2038", villager: "Rakesh B.", village: "Dhemaji", symptoms: ["Diarrhea", "Dehydration"], source: "Open well", household: 4, status: "pending", reportedAt: "8h ago" },
   { id: "RPT-2037", villager: "Sunita P.", village: "Goalpara", symptoms: ["Vomiting", "Cramps"], source: "Tap water", household: 2, status: "verified", reportedAt: "12h ago" },
 ];
+
+export interface RegisteredUser {
+  name: string;
+  email: string;
+  role: "villager" | "asha" | "official";
+  village: string;
+}
+
+export const registeredUsers: RegisteredUser[] = [
+  { name: "Aarti Das", email: "aarti.d@village.in", role: "villager", village: "Majuli" },
+  { name: "Bhupen Kalita", email: "bhupen.k@village.in", role: "villager", village: "Sivasagar" },
+  { name: "Mira Saikia", email: "mira.s@village.in", role: "villager", village: "Karimganj" },
+  { name: "Rakesh Bora", email: "rakesh.b@village.in", role: "villager", village: "Dhemaji" },
+  { name: "Sunita Patir", email: "sunita.p@village.in", role: "villager", village: "Goalpara" },
+  { name: "Dipa Hazarika", email: "dipa.h@village.in", role: "villager", village: "Tezpur" },
+  { name: "Nikhil Roy", email: "nikhil.r@village.in", role: "villager", village: "Barpeta" },
+  { name: "Pallavi Devi", email: "pallavi.d@village.in", role: "villager", village: "Nalbari" },
+  { name: "Dr. Anjali Borah", email: "anjali.asha@health.gov.in", role: "asha", village: "Majuli" },
+  { name: "Dr. Rohit Nath", email: "rohit.asha@health.gov.in", role: "asha", village: "Sivasagar" },
+  { name: "Dr. Kavita Sen", email: "kavita.asha@health.gov.in", role: "asha", village: "Karimganj" },
+  { name: "Officer S. Gogoi", email: "s.gogoi@assam.gov.in", role: "official", village: "Guwahati" },
+];
+
