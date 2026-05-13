@@ -17,10 +17,18 @@ export default function OfficialDashboard() {
   const highRisk = villageRisks.filter((v) => v.risk === "high");
 
   const sendAlert = (village: string) => {
-    toast.success(`SMS alert sent to ${village} via Fast2SMS`, {
-      description: "Boil water and seek medical help!",
+    const recipients = registeredUsers.filter((u) => u.village === village || u.role === "official" || u.role === "asha");
+    toast.success(`Alert emailed to ${recipients.length} recipients in ${village}`, {
+      description: `${recipients.slice(0, 3).map((r) => r.email).join(", ")}${recipients.length > 3 ? ` +${recipients.length - 3} more` : ""}`,
     });
   };
+
+  const broadcastAll = () => {
+    toast.success(`Broadcast sent to all ${registeredUsers.length} registered users`, {
+      description: "Villagers, ASHA workers and officials notified via email + SMS.",
+    });
+  };
+
 
   const stats = [
     { icon: AlertTriangle, label: "High-risk villages", value: highRisk.length, sub: "+1 from yesterday", color: "text-destructive", bg: "bg-destructive/10" },
