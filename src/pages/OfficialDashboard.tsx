@@ -1,10 +1,11 @@
 import { PageShell } from "@/components/PageShell";
 import { Button } from "@/components/ui/button";
-import { villageRisks, diseaseDist } from "@/lib/mockData";
+import { villageRisks, diseaseDist, registeredUsers } from "@/lib/mockData";
 import { VillageRiskChart, TrendChart, DiseaseDonut, WaterScatter } from "@/components/charts/Charts";
-import { AlertTriangle, TrendingUp, Activity, Send, MapPin } from "lucide-react";
+import { AlertTriangle, TrendingUp, Activity, Send, MapPin, Mail } from "lucide-react";
 import { toast } from "sonner";
 import { cn } from "@/lib/utils";
+
 
 const riskBadge = (r: string) =>
   r === "high" ? "bg-destructive/15 text-destructive border-destructive/30"
@@ -16,10 +17,18 @@ export default function OfficialDashboard() {
   const highRisk = villageRisks.filter((v) => v.risk === "high");
 
   const sendAlert = (village: string) => {
-    toast.success(`SMS alert sent to ${village} via Fast2SMS`, {
-      description: "Boil water and seek medical help!",
+    const recipients = registeredUsers.filter((u) => u.village === village || u.role === "official" || u.role === "asha");
+    toast.success(`Alert emailed to ${recipients.length} recipients in ${village}`, {
+      description: `${recipients.slice(0, 3).map((r) => r.email).join(", ")}${recipients.length > 3 ? ` +${recipients.length - 3} more` : ""}`,
     });
   };
+
+  const broadcastAll = () => {
+    toast.success(`Broadcast sent to all ${registeredUsers.length} registered users`, {
+      description: "Villagers, ASHA workers and officials notified via email + SMS.",
+    });
+  };
+
 
   const stats = [
     { icon: AlertTriangle, label: "High-risk villages", value: highRisk.length, sub: "+1 from yesterday", color: "text-destructive", bg: "bg-destructive/10" },
@@ -37,12 +46,17 @@ export default function OfficialDashboard() {
             <h1 className="font-display text-4xl md:text-5xl font-extrabold">District risk dashboard</h1>
             <p className="text-muted-foreground mt-2">Live data from villagers, ASHA workers and Sentinel-2 satellites.</p>
           </div>
-          <div className="flex gap-2 items-center px-4 py-2 rounded-full glass-card text-sm">
-            <span className="relative flex h-2 w-2">
-              <span className="animate-ripple absolute inline-flex h-full w-full rounded-full bg-success opacity-75" />
-              <span className="relative inline-flex rounded-full h-2 w-2 bg-success" />
-            </span>
-            <span className="font-medium">Updated 2 min ago</span>
+          <div className="flex gap-3 items-center flex-wrap">
+            <div className="flex gap-2 items-center px-4 py-2 rounded-full glass-card text-sm">
+              <span className="relative flex h-2 w-2">
+                <span className="animate-ripple absolute inline-flex h-full w-full rounded-full bg-success opacity-75" />
+                <span className="relative inline-flex rounded-full h-2 w-2 bg-success" />
+              </span>
+              <span className="font-medium">Updated 2 min ago</span>
+            </div>
+            <Button variant="hero" size="lg" onClick={broadcastAll}>
+              <Mail className="w-4 h-4" />Email all ({registeredUsers.length})
+            </Button>
           </div>
         </div>
 
@@ -151,6 +165,35 @@ export default function OfficialDashboard() {
                 ))}
               </tbody>
             </table>
+          </div>
+        </div>
+
+        {/* Registered users mailing list */}
+        <div className="glass-card rounded-3xl p-6">
+          <div className="flex items-center justify-between mb-5 flex-wrap gap-3">
+            <div>
+              <h3 className="font-display font-bold text-xl">Registered users mailing list</h3>
+              <p className="text-sm text-muted-foreground">All accounts receive official broadcasts</p>
+            </div>
+            <Button variant="hero" onClick={broadcastAll}>
+              <Mail className="w-4 h-4" />Send to all {registeredUsers.length}
+            </Button>
+          </div>
+          <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-3">
+            {registeredUsers.map((u) => (
+              <div key={u.email} className="flex items-center gap-3 p-3 rounded-2xl bg-card/50 border border-border/60 hover:border-primary/40 transition-smooth">
+                <div className={cn("w-10 h-10 rounded-xl flex items-center justify-center font-bold text-sm shrink-0",
+                  u.role === "official" ? "bg-primary/15 text-primary" : u.role === "asha" ? "bg-success/15 text-success" : "bg-accent/40 text-accent-foreground"
+                )}>
+                  {u.name.split(" ").map((n) => n[0]).slice(0, 2).join("")}
+                </div>
+                <div className="min-w-0 flex-1">
+                  <div className="font-semibold text-sm truncate">{u.name}</div>
+                  <div className="text-xs text-muted-foreground truncate">{u.email}</div>
+                </div>
+                <span className="text-[10px] font-bold uppercase tracking-wider text-muted-foreground">{u.role}</span>
+              </div>
+            ))}
           </div>
         </div>
       </div>
